@@ -25,15 +25,27 @@ public class AuthServiceImpl implements AuthService {
 		u.setPassword(new BCryptPasswordEncoder().encode(reg.getPassword()));
 		u.setCreatedAt(LocalDateTime.now());
 		u.setUpdatedAt(LocalDateTime.now());
-		System.out.println("456" + u);
 		User createdUser = userRepository.save(u);
 		
 		UserDTO userDTO = new UserDTO();
 		userDTO.setName(createdUser.getName());
 		userDTO.setEmail(createdUser.getEmail());
 		userDTO.setPassword(createdUser.getPassword());
-		userDTO.setCreated_at(createdUser.getCreatedAt());
-		userDTO.setUpdated_at(createdUser.getUpdatedAt());
+		userDTO.setCreatedAt(createdUser.getCreatedAt());
+		userDTO.setUpdatedAt(createdUser.getUpdatedAt());
 		return userDTO;
 	}
+	
+	@Override
+	public UserDTO copyUserToDTO(User u) {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setId(u.getId());
+		userDTO.setName(u.getName());
+		userDTO.setEmail(u.getEmail());
+		userDTO.setPassword(u.getPassword());
+		userDTO.setCreatedAt(u.getCreatedAt());
+		userDTO.setUpdatedAt(u.getUpdatedAt());
+		return userDTO;
+	}
+	
 }

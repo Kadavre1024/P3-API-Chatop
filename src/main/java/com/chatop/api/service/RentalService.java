@@ -1,36 +1,28 @@
 package com.chatop.api.service;
 
+import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
-
+import com.chatop.api.dtos.RentalDTO;
+import com.chatop.api.dtos.RentalRequest;
 import com.chatop.api.model.Rental;
-import com.chatop.api.repository.RentalRepository;
 
-import lombok.Data;
 
-@Data
-@Service
-public class RentalService {
+public interface RentalService {
+	
+	RentalDTO getRentalById(final Long id);
+	
+	List<Rental> getAllRentals();
+	
+	Rental saveRental(Rental r);
+	
+	void deleteRentalById(final long id);
+	
+	RentalDTO createRental(RentalRequest r, Long ownerId);
 
-	private RentalRepository props;
-	
-	public Optional<Rental> getRentalById(final Long id){
-		return props.findById(id);
-	}
-	
-	public Iterable<Rental> getAllRentals(){
-		if (props.findAll()!= null)
-			return props.findAll();
-		return null;
-	}
-	
-	public Rental saveRental(Rental r) {
-		return props.save(r);
-	}
-	
-	public void deleteRentalById(final long id) {
-		props.deleteById(id);
-	}
-	
+	Long rentalsCount();
+
+	RentalDTO copyRentalToDTO(Rental r);
+
+	RentalDTO updateRental(RentalRequest r, Long id);
 }

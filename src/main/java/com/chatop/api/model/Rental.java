@@ -15,7 +15,7 @@ import lombok.Data;
 @Table(name = "rentals")		// indique le nom de la table associée.
 public class Rental {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private Float surface;

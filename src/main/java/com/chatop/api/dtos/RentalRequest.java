@@ -1,6 +1,9 @@
 package com.chatop.api.dtos;
 
-import java.awt.Image;
+
+import java.io.File;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -8,9 +11,13 @@ import lombok.Data;
 public class RentalRequest {
 
 	private String name;
-	private int surface;
-	private int price;
-	private Image picture;
+	private float surface;
+	private float price;
+	private String picture;
 	private String description;
+	
+	public RentalRequest() {
+		super();
+	}
 	
 }
