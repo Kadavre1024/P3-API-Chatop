@@ -6,5 +6,5 @@ import com.chatop.api.model.Rental;
 
 public interface RentalRepository extends JpaRepository<Rental, Long>{
 
-	Rental findFirstByOwnerId(long ownerId);
+	Rental findFirstByOwnerId(long owner_id);
 }

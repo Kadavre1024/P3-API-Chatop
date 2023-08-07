@@ -1,9 +1,6 @@
 package com.chatop.api.dtos;
 
 
-import java.io.File;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -15,9 +12,9 @@ public class RentalRequest {
 	private float price;
 	private String picture;
 	private String description;
-	
+
 	public RentalRequest() {
 		super();
 	}
-	
+
 }

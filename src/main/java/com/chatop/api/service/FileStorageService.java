@@ -1,71 +1,36 @@
 package com.chatop.api.service;
+
+
+import java.io.File;
+import java.io.FileOutputStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chatop.api.configuration.FileStorageProperties;
-import com.chatop.api.exception.FileStorageException;
-import com.chatop.api.exception.MyFileNotFoundException;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
 @Service
 public class FileStorageService {
 
-    private final Path fileStorageLocation;
+	@Autowired
+	private static FileStorageProperties storageProperties;
 
-    @Autowired
-    public FileStorageService(FileStorageProperties fileStorageProperties) {
-        this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
-                .toAbsolutePath().normalize();
-
+	public static String storePicturePath(MultipartFile file, String prefixPath) {
+        String path = "";
         try {
-            Files.createDirectories(this.fileStorageLocation);
-        } catch (Exception ex) {
-            throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", ex);
+            path = storageProperties.getUploadDir() + prefixPath + file.getOriginalFilename(); //"D:/ProjetsAngular/Formation OC/P3 - ChâTop back-end/Developpez-le-back-end-en-utilisant-Java-et-Spring/src/assets/RentalPictures/"+prefixPath+file.getOriginalFilename();
+            File newFile = new File(path);
+            newFile.createNewFile();
+            FileOutputStream myfile = new FileOutputStream(newFile);
+            path = storageProperties.getWebServerUrl() + prefixPath + file.getOriginalFilename();//"http://127.0.0.1:3002/"+ prefixPath + file.getOriginalFilename();
+            myfile.write(file.getBytes());
+
+            myfile.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }
 
-    public String storeFile(File file, String fileNamePrefix) {
-        // Normalize file name
-        String fileName = fileNamePrefix + "_" + StringUtils.cleanPath(file.getName());
-
-        try {
-            // Check if the file's name contains invalid characters
-            if(fileName.contains("..")) {
-                throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
-            }
-
-            // Copy file to the target location (Replacing existing file with the same name)
-            Path targetLocation = this.fileStorageLocation.resolve(fileName);
-            Files.copy(file.toPath(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-
-            return targetLocation.toString();
-        } catch (IOException ex) {
-            throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
-        }
-    }
-
-    public Resource loadFileAsResource(String filePath) {
-        try {
-            //Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
-            Resource resource = new UrlResource(Paths.get(filePath).toUri());
-            if(resource.exists()) {
-                return resource;
-            } else {
-                throw new MyFileNotFoundException("File not found " + filePath);
-            }
-        } catch (MalformedURLException ex) {
-            throw new MyFileNotFoundException("File not found " + filePath, ex);
-        }
+        return path;
     }
 }

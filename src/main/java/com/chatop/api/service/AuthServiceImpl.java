@@ -16,26 +16,19 @@ public class AuthServiceImpl implements AuthService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Override
 	public UserDTO createUser(RegisterRequest reg) {
 		User u = new User();
 		u.setName(reg.getName());
 		u.setEmail(reg.getEmail());
 		u.setPassword(new BCryptPasswordEncoder().encode(reg.getPassword()));
-		u.setCreatedAt(LocalDateTime.now());
-		u.setUpdatedAt(LocalDateTime.now());
+		u.setCreated_at(LocalDateTime.now());
+		u.setUpdated_at(LocalDateTime.now());
 		User createdUser = userRepository.save(u);
-		
-		UserDTO userDTO = new UserDTO();
-		userDTO.setName(createdUser.getName());
-		userDTO.setEmail(createdUser.getEmail());
-		userDTO.setPassword(createdUser.getPassword());
-		userDTO.setCreatedAt(createdUser.getCreatedAt());
-		userDTO.setUpdatedAt(createdUser.getUpdatedAt());
-		return userDTO;
+		return copyUserToDTO(createdUser);
 	}
-	
+
 	@Override
 	public UserDTO copyUserToDTO(User u) {
 		UserDTO userDTO = new UserDTO();
@@ -43,9 +36,9 @@ public class AuthServiceImpl implements AuthService {
 		userDTO.setName(u.getName());
 		userDTO.setEmail(u.getEmail());
 		userDTO.setPassword(u.getPassword());
-		userDTO.setCreatedAt(u.getCreatedAt());
-		userDTO.setUpdatedAt(u.getUpdatedAt());
+		userDTO.setCreated_at(u.getCreated_at());
+		userDTO.setUpdated_at(u.getUpdated_at());
 		return userDTO;
 	}
-	
+
 }

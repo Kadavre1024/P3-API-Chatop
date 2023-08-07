@@ -15,10 +15,10 @@ public class RentalDTO {
 	private Float price;
 	private String picture;
 	private String description;
-	
-	private Long ownerId;
-	
-	private LocalDateTime createdAt;
-	
-	private LocalDateTime updatedAt;
+
+	private Long owner_id;
+
+	private LocalDateTime created_at;
+
+	private LocalDateTime updated_at;
 }

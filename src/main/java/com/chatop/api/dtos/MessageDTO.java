@@ -8,13 +8,13 @@ import lombok.Data;
 public class MessageDTO {
 
 	private Long id;
-	
+
 	private Long rentalId;
-	
-	private Long userId;
+
+	private Long user_id;
 	private String message;
-	
-	private LocalDateTime createdAt;
-	
-	private LocalDateTime updatedAt;
+
+	private LocalDateTime created_at;
+
+	private LocalDateTime updated_at;
 }

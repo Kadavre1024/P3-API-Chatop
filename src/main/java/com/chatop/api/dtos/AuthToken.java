@@ -6,7 +6,7 @@ import lombok.Data;
 public class AuthToken {
 
 	private String token;
-	
+
 	public AuthToken(String jwt) {
 		this.token = jwt;
 	}

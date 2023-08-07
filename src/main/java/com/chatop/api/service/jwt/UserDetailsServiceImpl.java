@@ -14,7 +14,7 @@ import com.chatop.api.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
-	
+
 	@Autowired
 	private UserRepository userRepo;
 
