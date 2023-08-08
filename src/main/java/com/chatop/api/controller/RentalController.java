@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.chatop.api.configuration.FileStorageProperties;
 import com.chatop.api.dtos.RentalDTO;
 import com.chatop.api.dtos.RentalRequest;
 import com.chatop.api.dtos.RentalResponse;
@@ -36,6 +37,9 @@ public class RentalController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private FileStorageProperties storageProperties;
 
 	@PutMapping(value="/{id}", consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Operation(summary = "Update rental", description="Update a rental by its ID")
@@ -89,7 +93,7 @@ public class RentalController {
 		String picturePrefixPath ="Owner-ID" + userAuth.getId() + "_Rental-Id" + (rentalService.getLastRentalId()+1) + "_";
 
 		// Picture storage : return the URL storage
-		String picturePath = FileStorageService.storePicturePath(picture, picturePrefixPath);
+		String picturePath = FileStorageService.storePicturePath(picture, picturePrefixPath, storageProperties.getUploadDir(), storageProperties.getWebServerUrl());
 
 		RentalRequest rentalRequest = new RentalRequest();
 		rentalRequest.setName(name);
