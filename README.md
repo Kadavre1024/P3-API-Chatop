@@ -9,6 +9,7 @@ This project was generated with Spring Tool Suite version 4.19.0.RELEASE. Downlo
 - maven version 4.0.0
 - Swagger 3
 - MySQL server version 8.0.33
+- jasypt version 1.9.3
 
 ## Dependencies
 
@@ -26,6 +27,7 @@ This project was generated with Spring Tool Suite version 4.19.0.RELEASE. Downlo
 - jjwt api (version 0.11.5)
 - jjwt impl (version 0.11.5)
 - jjwt jackson (version 0.11.5)
+- jasypt spring boot starter
 
 ## MySQL Database Installation
 
@@ -39,7 +41,7 @@ Next, create a spring_user account to access to the database like :
 - mysql> create user 'springuser'@'%' identified by 'password';
 - mysql> grant all on chatop.* to 'springuser'@'%';
 
-If you want to change springuser name and password, be carrefull to change it also in the application.properties file (spring.datasource.username and spring.datasource.password parameters).
+If you want to change springuser name and password, be carrefull to change it also in the application.properties file (spring.datasource.username and spring.datasource.password parameters). The database user password is encrypted by jasypt in the application. if you want to replace it, please refer to `https://medium.com/@javatechie/spring-boot-password-encryption-using-jasypt-e92eed7343ab`.
 
 ## Development server
 
@@ -59,4 +61,6 @@ Please, before each critical build, make sure that the api version has been chan
 
 While api's running, go to `http://localhost:3001/swagger-ui/index.html` to get the html Swagger documentation for all api roots or `http://localhost:3001/v3/api-docs` to get the JSON format. No authentication needed.
 
+### Picture storage
+The picture storage path and web server url are initialized in the application.properties file. So please, replace them by the final path and url.
 
